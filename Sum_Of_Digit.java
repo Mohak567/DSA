@@ -1,8 +1,8 @@
 public class Sum_Of_Digit {
-    static void sod(int num, int sum) {
+    static void sod(int num, int sum) {// using stack build
         if (num == 0) {
             System.out.println("sum " + sum);
-            return;// tail recursion
+            return;// tail recursion because there is no further processing
         }
         int sd = num % 10;
         sum += sd;
@@ -10,7 +10,6 @@ public class Sum_Of_Digit {
     }
 
     public static void main(String[] args) {
-        int num = 123;
-        sod(num, 0);
+        sod(123, 0);
     }
 }

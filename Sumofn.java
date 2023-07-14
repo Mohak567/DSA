@@ -9,6 +9,6 @@ public class Sumofn {
     }
 
     public static void main(String[] args) {
-        sum(5, 0);
+        sum(10, 0);
     }
 }

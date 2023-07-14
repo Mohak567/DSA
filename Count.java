@@ -12,6 +12,6 @@ public class Count {
     }
 
     public static void main(String[] args) {
-        count(1020300, 0);
+        count(102030, 0);
     }
 }

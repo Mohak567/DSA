@@ -12,6 +12,6 @@ public class Count1 {
     }
 
     public static void main(String[] args) {
-        System.out.println(count(1020300));
+        System.out.println(count(102030));
     }
 }

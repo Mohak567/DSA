@@ -1,3 +1,5 @@
+import java.lang.String;
+
 public class PalindromeStr {
     static String palin(String s) {
         if (s.length() == 1) {
@@ -12,11 +14,6 @@ public class PalindromeStr {
     public static void main(String[] args) {
         String str = "kkk";
         String s = palin(str);
-        if (s.equals(str)) {
-            System.out.println(1);
-        } else {
-            System.out.println(0);
-        }
-
+        System.out.println(s.equals(str));
     }
 }

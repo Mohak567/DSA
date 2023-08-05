@@ -22,6 +22,7 @@ public class Stickler_Thief// GFG
             rev = curr;
             curr = Math.max(incl, excl);
         }
+
         System.out.println(curr);
     }
 }

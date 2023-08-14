@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
+//ALL SORTED
 public class PermutationA2 {
     public static List<String> find_permutation(String S) {
         String str = S;
@@ -27,6 +28,6 @@ public class PermutationA2 {
     }
 
     public static void main(String[] args) {
-        System.out.println(find_permutation("acb"));
+        System.out.println(find_permutation("abc"));
     }
 }

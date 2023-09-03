@@ -1,13 +1,33 @@
-class GfG{
-    //Function to reverse the queue.
-    public Queue<Integer> rev(Queue<Integer> q){
+import java.util.*;
+
+public class QueueReversal {
+    public static Queue<Integer> rev(Queue<Integer> q) {
         Stack<Integer> s = new Stack<>();
-        while(!q.isEmpty()){
-        s.push(q.poll());
+
+        // Push all elements from the queue into the stack
+        while (!q.isEmpty()) {
+            s.push(q.poll());
         }
-        while(!s.isEmpty()){
+
+        // Pop elements from the stack and enqueue them back into the queue
+        while (!s.isEmpty()) {
             q.offer(s.pop());
         }
+
         return q;
+    }
+
+    public static void main(String[] args) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(1);
+        queue.offer(2);
+        queue.offer(3);
+        queue.offer(4);
+
+        System.out.println("Original Queue: " + queue);
+        
+        rev(queue);
+
+        System.out.println("Reversed Queue: " + queue);
     }
 }

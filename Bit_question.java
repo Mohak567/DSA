@@ -51,9 +51,35 @@ public class Bit_question {
 
         // check given numbers are of same signs or not
 
-        int a = -66465;
-        int b = 25;
-        int n = a ^ b;
-        System.out.println(n < 0 ? "no" : "yes");
+        // int a = -66465;
+        // int b = 25;
+        // int n = a ^ b;
+        // System.out.println(n < 0 ? "no" : "yes");
+
+        // Increase the number by one
+
+        // int n = 6;
+        // int temp = -(~n);
+        // System.out.println(temp);
+
+        // second approach
+
+        // int n = 6;
+        // int temp = n | 1;
+        // System.out.println(temp);
+
+        // multiply without using * operator
+
+        // int n = 10;
+        // // double number_to_be_multiply = 4.5; 4 can be only 2^k
+        // System.out.println((n << 2) + (n >> 1));
+        // // 2^k //divide by 2^k
+
+        // find xor without xor operator
+
+        int a = 5;
+        int b = 6;
+        // a ^ b = ~b&a+~a&b
+        System.out.println((~b & a) + (~a & b));
     }
 }

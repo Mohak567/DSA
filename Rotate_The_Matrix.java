@@ -1,4 +1,4 @@
-public class Rotate_The_Matrix {
+public class Rotate_The_Matrix {// 90degree clockwise
     /*
      * 1 2 3 --> 7 4 1
      * 4 5 6 --> 8 5 2

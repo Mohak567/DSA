@@ -20,5 +20,12 @@ public class Rotate_The_MatrixA2 {// 90degree clockwise
                 mat[i][n - 1 - j] = temp;
             }
         }
+        // printing
+        for (int[] i : mat) {
+            for (int j : i) {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
     }
 }

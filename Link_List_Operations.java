@@ -63,6 +63,58 @@ class Link_List_Operations<T> {
         temp2.next = temp.next;
     }
 
+    void detectCycleAndRemoveCycle() {// floyd cycle
+        Node<T> slow = head;
+        Node<T> fast = head;
+        while (fast != null && fast.next != null) {// detecting the cycle
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                System.out.println("Cycle is present");
+                break;
+            }
+        }
+        if (slow != fast) {// removing the cycle
+            System.out.println("No cycle is present");
+            return;
+        }
+        slow = head;
+        while (slow.next != fast.next) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        fast.next = null;// break the cycle
+    }
+
+    void midElement() {
+        if (head == null) {
+            System.out.println("No element is present");
+            return;
+        }
+        Node<T> slow = head;
+        Node<T> fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        System.out.println(slow.data);
+    }
+
+    void findk(int k) {
+        Node<T> i = head;
+        Node<T> j = head;
+        // move j till k
+        for (int l = 1; l <= k; l++) {
+            j = j.next;
+        }
+        // move j till end
+        while (j != null) {
+            i = i.next;
+            j = j.next;
+        }
+        System.out.println(i.data);// kth data from last
+    }
+
     void print(Node<T> start) {
         Node<T> temp = start;
         while (temp != null) {
@@ -81,6 +133,9 @@ class Link_List_Operations<T> {
             System.out.println("Enter 2 to print");
             System.out.println("Enter 3 to add at a posistion");
             System.out.println("Enter 4 to delete");
+            System.out.println("Enter 5 to check the presence of the cycle in LinkList");
+            System.out.println("Enter 6 to find mid element");
+            System.out.println("Enter 7 to find Kth element from the last of LinkList");
             choice = sc.nextInt();
             switch (choice) {
                 case 0:
@@ -104,6 +159,16 @@ class Link_List_Operations<T> {
                 case 4:
                     System.out.println("Enter position");
                     opr.delete(sc.nextInt());
+                    break;
+                case 5:
+                    opr.detectCycleAndRemoveCycle();
+                    break;
+                case 6:
+                    opr.midElement();
+                    break;
+                case 7:
+                    System.out.println("Enter position");
+                    opr.findk(sc.nextInt());
                     break;
                 default:
                     System.out.println("Wrong chice");

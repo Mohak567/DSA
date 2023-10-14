@@ -62,6 +62,38 @@ class BinaryTreeOperations {
         print(root.left);
         print(root.right);
     }
+
+    // DFT
+    // InOrder(Left,Parent,Right)
+    void InOrder(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+        PreOrder(root.left);
+        System.out.println(root.data);
+        PreOrder(root.right);
+    }
+
+    // PreOrder(Parent,Left,Right)
+    void PreOrder(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+        System.out.println(root.data);
+        PreOrder(root.left);
+        PreOrder(root.right);
+    }
+
+    // PostOrder(Right,Left,Parent)
+    void PostOrder(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+        PostOrder(root.right);
+        PostOrder(root.left);
+        System.out.println(root.data);
+    }
+
 }
 
 public class BinaryTree_Example {
@@ -73,7 +105,10 @@ public class BinaryTree_Example {
             System.out.println("Binary Tree Operations");
             System.out.println("1 - Insert");
             System.out.println("2 - Print");
-            System.out.println("3 - Exit");
+            System.out.println("3 - InOrder");
+            System.out.println("4 - PreOrder");
+            System.out.println("5 - PostOrder");
+            System.out.println("6 - Exit");
             System.out.println("Enter the choice");
             int choice = sc.nextInt();
             switch (choice) {
@@ -84,6 +119,15 @@ public class BinaryTree_Example {
                     opr.print(root);
                     break;
                 case 3:
+                    opr.InOrder(root);
+                    break;
+                case 4:
+                    opr.PreOrder(root);
+                    break;
+                case 5:
+                    opr.PostOrder(root);
+                    break;
+                case 6:
                     return;
             }
         }

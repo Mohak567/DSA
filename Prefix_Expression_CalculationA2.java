@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-public class Prefix_Expression_CalculationA2 {
+public class Prefix_Expression_CalculationA2 {// more than 1 digit can be used
     public static int calculation(String str) {
         String[] arr = str.split(" ");
         Stack<Integer> s = new Stack<>();

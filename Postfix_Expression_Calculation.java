@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-public class Postfix_Expression_Calculation {
+public class Postfix_Expression_Calculation {// reverse polish notation
     public static void main(String[] args) {
         Stack<Integer> s = new Stack<>();
         String str = "3897*/+";

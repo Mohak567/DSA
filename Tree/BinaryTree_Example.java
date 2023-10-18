@@ -1,6 +1,7 @@
 package Tree;
 
 import java.util.Scanner;
+import java.util.Stack;
 
 class BinaryTreeNode<T> {
     T data;
@@ -63,15 +64,16 @@ class BinaryTreeOperations {
         print(root.right);
     }
 
+    // Using Recursion way
     // DFT
     // InOrder(Left,Parent,Right)
     void InOrder(BinaryTreeNode<Integer> root) {
         if (root == null) {
             return;
         }
-        PreOrder(root.left);
+        InOrder(root.left);
         System.out.println(root.data);
-        PreOrder(root.right);
+        InOrder(root.right);
     }
 
     // PreOrder(Parent,Left,Right)
@@ -89,11 +91,99 @@ class BinaryTreeOperations {
         if (root == null) {
             return;
         }
-        PostOrder(root.right);
         PostOrder(root.left);
+        PostOrder(root.right);
         System.out.println(root.data);
     }
 
+    // using Iterative Way
+    // Preorder(Parent,Left,Right)
+    // Approach 1
+    void IPreOrder(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+        Stack<BinaryTreeNode<Integer>> s = new Stack<>();
+        s.push(root);
+        while (!s.isEmpty()) {
+            BinaryTreeNode<Integer> currentNode = s.pop();
+            System.out.print(currentNode.data + " ");
+            // checking right node first
+            if (currentNode.right != null) {
+                s.push(currentNode.right);
+            }
+            // checking left node
+            if (currentNode.left != null) {
+                s.push(currentNode.left);
+            }
+        }
+        System.out.println();
+    }
+
+    // Preorder(Parent,Left,Right)
+    // Approach 2
+    void IPreOrderA2(BinaryTreeNode<Integer> root) {// optimized
+        if (root == null) {
+            return;
+        }
+        Stack<BinaryTreeNode<Integer>> s = new Stack<>();
+        BinaryTreeNode<Integer> currentNode = root;
+        while (!s.isEmpty() || currentNode != null) {
+            while (currentNode != null) {
+                System.out.print(currentNode.data + " ");
+                if (currentNode.right != null) {
+                    s.push(currentNode.right);
+                }
+                currentNode = currentNode.left;
+            }
+            if (!s.isEmpty()) {
+                currentNode = s.pop();
+            }
+        }
+        System.out.println();
+    }
+
+    // InOrder(Left,Parent,Right)
+    void IInOrder(BinaryTreeNode<Integer> root) {
+        // if (root == null) {
+        // return;
+        // }
+        Stack<BinaryTreeNode<Integer>> s = new Stack<>();
+        BinaryTreeNode<Integer> currentNode = root;
+        while (currentNode != null || !s.isEmpty()) {
+            // Traversing towards the left end until null is encountered
+            while (currentNode != null) {
+                s.push(currentNode);
+                currentNode = currentNode.left;
+            }
+            // after null is encountered
+            currentNode = s.pop();
+            System.out.print(currentNode.data + " ");
+            currentNode = currentNode.right;
+        }
+    }
+
+    void IPostOrder(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+        Stack<BinaryTreeNode<Integer>> s = new Stack<>();
+        Stack<Integer> result = new Stack<>();
+        s.push(root);
+        while (!s.isEmpty()) {
+            BinaryTreeNode<Integer> currentNode = s.pop();
+            result.push(currentNode.data);
+            if (currentNode.left != null) {
+                s.push(currentNode.left);
+            }
+            if (currentNode.right != null) {
+                s.push(currentNode.right);
+            }
+        }
+        while (!result.isEmpty()) {
+            System.out.print(result.pop() + " ");
+        }
+    }
 }
 
 public class BinaryTree_Example {
@@ -108,7 +198,10 @@ public class BinaryTree_Example {
             System.out.println("3 - InOrder");
             System.out.println("4 - PreOrder");
             System.out.println("5 - PostOrder");
-            System.out.println("6 - Exit");
+            System.out.println("6 - PreOrder By Iteration");
+            System.out.println("7 - InOrder By Iteration");
+            System.out.println("8 - PostOrder By Iteration");
+            System.out.println("9 - Exit");
             System.out.println("Enter the choice");
             int choice = sc.nextInt();
             switch (choice) {
@@ -127,7 +220,19 @@ public class BinaryTree_Example {
                 case 5:
                     opr.PostOrder(root);
                     break;
+                // case 6:
+                // opr.IPreOrder(root);
+                // break;
                 case 6:
+                    opr.IPreOrderA2(root);
+                    break;
+                case 7:
+                    opr.IInOrder(root);
+                    break;
+                case 8:
+                    opr.IPostOrder(root);
+                    break;
+                case 9:
                     return;
             }
         }

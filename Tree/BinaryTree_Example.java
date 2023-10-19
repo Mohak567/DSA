@@ -1,5 +1,6 @@
 package Tree;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -48,7 +49,7 @@ class BinaryTreeOperations {
             return;
         }
         // branch recursion
-        // DFT
+        // DFT (Depth First Traversal)
         String result = "";
         result += root.data + "-->";
         // if left node is not null
@@ -184,6 +185,126 @@ class BinaryTreeOperations {
             System.out.print(result.pop() + " ");
         }
     }
+
+    // BFT (Breath First Traversal) = (Level Order Traversal) LOT
+    void LevelOrder(BinaryTreeNode<Integer> root) {
+        LinkedList<BinaryTreeNode<Integer>> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            BinaryTreeNode<Integer> node = queue.removeFirst();
+            System.out.print(node.data + " ");
+            // checking parent's left and right child
+            if (node.left != null) {
+                queue.addLast(node.left);
+            }
+            if (node.right != null) {
+                queue.addLast(node.right);
+            }
+        }
+    }
+
+    void LevelOrderA2(BinaryTreeNode<Integer> root) {
+        LinkedList<BinaryTreeNode<Integer>> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int queueSize = queue.size();
+            for (int i = 0; i < queueSize; i++) {
+                BinaryTreeNode<Integer> currentNode = queue.poll();
+                System.out.print(currentNode.data + " ");
+                if (currentNode.left != null) {
+                    queue.addLast(currentNode.left);
+                }
+                if (currentNode.right != null) {
+                    queue.addLast(currentNode.right);
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    int height(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+        int height = Math.max(leftHeight, rightHeight);
+        return height + 1;
+    }
+
+    int sizeOfBinaryTree(BinaryTreeNode<Integer> root) {// total number of nodes
+        if (root == null) {
+            return 0;
+        }
+        int count = 1;
+        count += sizeOfBinaryTree(root.left);
+        count += sizeOfBinaryTree(root.right);
+        return count;
+    }
+
+    // public void Kth_Node_From_Root(BinaryTreeNode<Integer> root, int k) {
+    // if (root == null || k <= 0) {
+    // return;
+    // }
+    // if (k > height(root)) {
+    // return;
+    // }
+    // BinaryTreeNode<Integer> current = root;
+    // int i = 1;
+
+    // while (i < k && current != null) {
+    // if (current.left != null) {
+    // current = current.left;
+    // } else if (current.right != null) {
+    // current = current.right;
+    // }
+    // i++;
+    // }
+
+    // if (i == k && current != null) {
+    // System.out.println(current.data);
+    // }
+    // }
+
+    int largest(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            return -1;
+        }
+        int[] max = { Integer.MIN_VALUE };
+        inOrderForlargest(root, max);
+        return max[0];
+    }
+
+    void inOrderForlargest(BinaryTreeNode<Integer> node, int[] max) {
+        if (node == null) {
+            return;
+        }
+        inOrderForlargest(node.left, max);
+        if (node.data > max[0]) {
+            max[0] = node.data;
+        }
+        inOrderForlargest(node.right, max);
+    }
+
+    int smallest(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            return -1;
+        }
+        int[] min = { Integer.MAX_VALUE };
+        inOrderForlargest(root, min);
+        return min[0];
+    }
+
+    void inOrderForsmallest(BinaryTreeNode<Integer> node, int[] min) {
+        if (node == null) {
+            return;
+        }
+        inOrderForlargest(node.left, min);
+        if (node.data < min[0]) {
+            min[0] = node.data;
+        }
+        inOrderForlargest(node.right, min);
+    }
 }
 
 public class BinaryTree_Example {
@@ -201,7 +322,12 @@ public class BinaryTree_Example {
             System.out.println("6 - PreOrder By Iteration");
             System.out.println("7 - InOrder By Iteration");
             System.out.println("8 - PostOrder By Iteration");
-            System.out.println("9 - Exit");
+            System.out.println("9 - for BFT");
+            System.out.println("10 - for finding tree height");
+            // System.out.println("11 - find kth node from root");
+            System.out.println("12 - to find largest number");
+            System.out.println("13 - to find smallest number");
+            System.out.println("15 - Exit");
             System.out.println("Enter the choice");
             int choice = sc.nextInt();
             switch (choice) {
@@ -232,7 +358,27 @@ public class BinaryTree_Example {
                 case 8:
                     opr.IPostOrder(root);
                     break;
+                // case 9:
+                // opr.LevelOrder(root);
+                // break;
                 case 9:
+                    opr.LevelOrderA2(root);
+                    break;
+                case 10:
+                    System.out.println(opr.height(root));
+                    break;
+                // case 11:
+                // System.out.println("Enter value for k");
+                // int k = sc.nextInt();
+                // opr.Kth_Node_From_Root(root, k);
+                // break;
+                case 12:
+                    System.out.println(opr.largest(root));
+                    break;
+                case 13:
+                    System.out.println(opr.smallest(root));
+                    break;
+                case 15:
                     return;
             }
         }

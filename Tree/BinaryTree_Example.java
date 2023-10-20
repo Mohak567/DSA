@@ -1,8 +1,12 @@
 package Tree;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.TreeMap;
 
 class BinaryTreeNode<T> {
     T data;
@@ -305,6 +309,122 @@ class BinaryTreeOperations {
         }
         inOrderForlargest(node.right, min);
     }
+
+    // using recursion
+    int prev_level = 0;
+
+    void leftViewOfTree(BinaryTreeNode<Integer> root, int currentLevel) {
+        if (root == null) {
+            return;
+        }
+        if (prev_level < currentLevel) {
+            System.out.print(root.data + " ");
+            prev_level = currentLevel;
+        }
+        leftViewOfTree(root.left, currentLevel + 1);
+        leftViewOfTree(root.right, currentLevel + 1);
+    }
+
+    int prevlevel = 0;
+
+    void rightViewOfTree(BinaryTreeNode<Integer> root, int currentLevel) {
+        if (root == null) {
+            return;
+        }
+        if (prevlevel < currentLevel) {
+            System.out.print(root.data + " ");
+            prevlevel = currentLevel;
+        }
+        rightViewOfTree(root.right, currentLevel + 1);
+        rightViewOfTree(root.left, currentLevel + 1);
+    }
+
+    // using iteration
+    void ILeftViewOfTree(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+        Queue<BinaryTreeNode<Integer>> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int queue_size = queue.size();
+            for (int i = 0; i < queue_size; i++) {
+                BinaryTreeNode<Integer> current = queue.poll();
+                if (i == 0) {
+                    System.out.print(current.data + " ");
+                }
+                if (current.left != null) {
+                    queue.offer(current.left);
+                }
+                if (current.right != null) {
+                    queue.offer(current.right);
+                }
+            }
+        }
+    }
+
+    void IReftViewOfTree(BinaryTreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+        Queue<BinaryTreeNode<Integer>> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int queue_size = queue.size();
+            for (int i = queue_size - 1; i >= 0; i--) {
+                BinaryTreeNode<Integer> current = queue.poll();
+                if (i == queue_size - 1) {
+                    System.out.print(current.data + " ");
+                }
+                if (current.right != null) {
+                    queue.offer(current.right);
+                }
+                if (current.left != null) {
+                    queue.offer(current.left);
+                }
+            } // or
+              // for (int i = 0; i<queue_size; i++) {
+              // BinaryTreeNode<Integer> current = queue.poll();
+              // if (i == 0) {
+              // System.out.print(current.data + " ");
+              // }
+              // if (current.right != null) {
+              // queue.offer(current.right);
+              // }
+              // if (current.left != null) {
+              // queue.offer(current.left);
+              // }
+              // }
+        }
+    }
+
+    void verticalOrder(BinaryTreeNode<Integer> root) {// printing logic
+        int distance = 0;
+        TreeMap<Integer, ArrayList<Integer>> map = new TreeMap<>();
+        verticalOrderLogic(root, distance, map);
+        for (Map.Entry<Integer, ArrayList<Integer>> m : map.entrySet()) {
+            System.out.println(m.getKey() + " " + m.getValue());
+        }
+    }
+
+    void verticalOrderLogic(BinaryTreeNode<Integer> root, int distance, TreeMap<Integer, ArrayList<Integer>> map) {
+        if (root == null) {
+            return;
+        }
+        if (map.get(distance) == null) {// distance don't exist
+            // then create a new arraylist
+            ArrayList<Integer> list = new ArrayList<>();
+            list.add(root.data);
+            map.put(distance, list);
+        } else {// distance exist
+                // get the old arraylist and update its value
+            ArrayList<Integer> l = map.get(distance);
+            l.add(root.data);
+            map.put(distance, l);
+        }
+        verticalOrderLogic(root.left, distance - 1, map);
+        verticalOrderLogic(root.right, distance + 1, map);
+    }
 }
 
 public class BinaryTree_Example {
@@ -327,7 +447,10 @@ public class BinaryTree_Example {
             // System.out.println("11 - find kth node from root");
             System.out.println("12 - to find largest number");
             System.out.println("13 - to find smallest number");
-            System.out.println("15 - Exit");
+            System.out.println("14 - to print left view of the tree");
+            System.out.println("15 - to print right view of the tree");
+            System.out.println("16 - to print vertical order");
+            System.out.println("20 - Exit");
             System.out.println("Enter the choice");
             int choice = sc.nextInt();
             switch (choice) {
@@ -378,7 +501,22 @@ public class BinaryTree_Example {
                 case 13:
                     System.out.println(opr.smallest(root));
                     break;
-                case 15:
+                // case 14://recursion
+                // opr.leftViewOfTree(root, 1);
+                // break;
+                case 14:// iterative
+                    opr.ILeftViewOfTree(root);
+                    break;
+                // case 15:// recursion
+                // opr.rightViewOfTree(root, 1);
+                // break;
+                case 15:// iterative
+                    opr.IReftViewOfTree(root);
+                    break;
+                case 16:
+                    opr.verticalOrder(root);
+                    break;
+                case 20:
                     return;
             }
         }

@@ -425,6 +425,91 @@ class BinaryTreeOperations {
         verticalOrderLogic(root.left, distance - 1, map);
         verticalOrderLogic(root.right, distance + 1, map);
     }
+
+    void topView(BinaryTreeNode<Integer> root) {// printing logic
+        int distance = 0;
+        TreeMap<Integer, ArrayList<Integer>> map = new TreeMap<>();
+        topViewLogic(root, distance, map);
+        for (Map.Entry<Integer, ArrayList<Integer>> m : map.entrySet()) {
+            System.out.println(m.getKey() + " " + m.getValue());
+        }
+    }
+
+    void topViewLogic(BinaryTreeNode<Integer> root, int distance, TreeMap<Integer, ArrayList<Integer>> map) {
+        if (root == null) {
+            return;
+        }
+        if (map.get(distance) == null) {// distance don't exist
+            // then create a new arraylist
+            ArrayList<Integer> list = new ArrayList<>();
+            list.add(root.data);
+            map.put(distance, list);// just storing 1 value
+            topViewLogic(root.left, distance - 1, map);
+            topViewLogic(root.right, distance + 1, map);
+        }
+    }
+
+    void bottomView(BinaryTreeNode<Integer> root) {
+        int distance = 0;
+        TreeMap<Integer, ArrayList<Integer>> map = new TreeMap<>();
+        topViewLogic(root, distance, map);
+        for (Map.Entry<Integer, ArrayList<Integer>> m : map.entrySet()) {
+            ArrayList<Integer> l = m.getValue();
+            System.out.println(m.getKey() + " " + l.get(l.size() - 1));
+        }
+    }
+
+    boolean isChildrenSum(BinaryTreeNode<Integer> root) {
+        // termination case
+        if (root == null) {
+            return true;
+        }
+        if (root.left == null && root.right == null) {
+            return true;
+        }
+
+        int sum = 0;
+        if (root.left != null) {
+            sum += root.left.data;
+        }
+        if (root.right != null) {
+            sum += root.right.data;
+        }
+        return (root.data == sum && isChildrenSum(root.left) && isChildrenSum(root.right));
+    }
+
+    boolean search(BinaryTreeNode<Integer> root, ArrayList<BinaryTreeNode<Integer>> path, int element) {
+        if (root == null) {
+            return false;
+        }
+        path.add(root);
+        if (root.data == element) {
+            return true;
+        }
+        if (search(root.left, path, element) || search(root.right, path, element)) {
+            return true;
+        }
+        return false;
+    }
+
+    BinaryTreeNode<Integer> lca(BinaryTreeNode<Integer> root, int n1, int n2) {
+        ArrayList<BinaryTreeNode<Integer>> path1 = new ArrayList<>();
+        ArrayList<BinaryTreeNode<Integer>> path2 = new ArrayList<>();
+
+        if (!search(root, path1, n1) || !search(root, path2, n2)) {
+            return null;
+        }
+
+        for (int i = path1.size() - 1; i >= 0; i--) {
+            for (int j = path2.size() - 1; j >= 0; j--) {
+                if (path1.get(i).data == path2.get(j).data) {
+                    System.out.println("Lowest common Ansector " + path1.get(i).data);
+                    return path1.get(i);
+                }
+            }
+        }
+        return null;
+    }
 }
 
 public class BinaryTree_Example {
@@ -450,7 +535,11 @@ public class BinaryTree_Example {
             System.out.println("14 - to print left view of the tree");
             System.out.println("15 - to print right view of the tree");
             System.out.println("16 - to print vertical order");
-            System.out.println("20 - Exit");
+            System.out.println("17 - to find top view");
+            System.out.println("18 - to find bottom view");
+            System.out.println("19 - to check the children sum is equal to root");
+            System.out.println("20 - to find lowest common ancestor");
+            System.out.println("25 - Exit");
             System.out.println("Enter the choice");
             int choice = sc.nextInt();
             switch (choice) {
@@ -516,7 +605,23 @@ public class BinaryTree_Example {
                 case 16:
                     opr.verticalOrder(root);
                     break;
+                case 17:
+                    opr.topView(root);
+                    break;
+                case 18:
+                    opr.bottomView(root);
+                    break;
+                case 19:
+                    System.out.println(opr.isChildrenSum(root) ? "yes" : "no");
+                    break;
                 case 20:
+                    System.out.println("Enter first element");
+                    int a = sc.nextInt();
+                    System.out.println("Enter second element");
+                    int b = sc.nextInt();
+                    opr.lca(root, a, b);
+                    break;
+                case 25:
                     return;
             }
         }

@@ -398,6 +398,20 @@ class BinaryTreeOperations {
         }
     }
 
+    void verticalSum(BinaryTreeNode<Integer> root) {
+        int distance = 0;
+        TreeMap<Integer, ArrayList<Integer>> map = new TreeMap<>();
+        verticalOrderLogic(root, distance, map);
+        for (Map.Entry<Integer, ArrayList<Integer>> m : map.entrySet()) {
+            int sum = 0;
+            ArrayList<Integer> l = m.getValue();
+            for (int i : l) {
+                sum += i;
+            }
+            System.out.println(m.getKey() + " " + sum);
+        }
+    }
+
     void verticalOrder(BinaryTreeNode<Integer> root) {// printing logic
         int distance = 0;
         TreeMap<Integer, ArrayList<Integer>> map = new TreeMap<>();
@@ -510,6 +524,22 @@ class BinaryTreeOperations {
         }
         return null;
     }
+
+    BinaryTreeNode<Integer> lcaA2(BinaryTreeNode<Integer> root, int n1, int n2) {
+        if (root == null || root.data == n1 || root.data == n2) {
+            return root;
+        }
+        BinaryTreeNode<Integer> leftNode = lcaA2(root.left, n1, n2);
+        BinaryTreeNode<Integer> rightNode = lcaA2(root.right, n1, n2);
+
+        if (leftNode == null) {
+            return rightNode;
+        } else if (rightNode == null) {
+            return leftNode;
+        } else {
+            return root;
+        }
+    }
 }
 
 public class BinaryTree_Example {
@@ -539,6 +569,7 @@ public class BinaryTree_Example {
             System.out.println("18 - to find bottom view");
             System.out.println("19 - to check the children sum is equal to root");
             System.out.println("20 - to find lowest common ancestor");
+            System.out.println("21 - to find vertical sum");
             System.out.println("25 - Exit");
             System.out.println("Enter the choice");
             int choice = sc.nextInt();
@@ -619,7 +650,12 @@ public class BinaryTree_Example {
                     int a = sc.nextInt();
                     System.out.println("Enter second element");
                     int b = sc.nextInt();
-                    opr.lca(root, a, b);
+                    // opr.lca(root, a, b);
+                    BinaryTreeNode<Integer> ans = opr.lcaA2(root, a, b);
+                    System.out.println("LCA = " + ans.data);
+                    break;
+                case 21:
+                    opr.verticalSum(root);
                     break;
                 case 25:
                     return;

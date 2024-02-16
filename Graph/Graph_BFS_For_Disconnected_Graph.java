@@ -33,7 +33,7 @@ public class Graph_BFS_For_Disconnected_Graph {
 
     public static void Disconnected(ArrayList<ArrayList<Integer>> adj, int v) {
         boolean[] visited = new boolean[v];
-        int count = 0;
+        int count = 0;//for counting number of islands
         for (int i = 0; i < v; i++) {
             visited[i] = false;
         }
@@ -45,6 +45,17 @@ public class Graph_BFS_For_Disconnected_Graph {
         }
         System.out.println("Number of connected components: " + count);
     }
+    // public static void dis(ArrayList<ArrayList<Integer>>adj,int vertex){
+    //     boolean[] arr = new boolean[vertex+1];
+    //     // for(int i=0;i<arr.length;i++){
+    //     //     arr[i] = false;
+    //     // 
+    //     for(int i=0;i<arr.length;i++){
+    //         if(!arr[i]){
+    //             bfs(adj, i, arr);
+    //         }
+    //     }
+    // }
 
     public static void main(String[] args) {
         int V = 7;
